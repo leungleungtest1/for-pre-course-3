@@ -1,0 +1,10 @@
+- @categories.each do |category|
+  - category.videos.each do |video|
+    %div{style: 'display: inline-block; padding: 5px'}
+      %p= category.name
+      %br
+      %a{href: "video/#{video.id}"}
+        %img{src: "/#{video.url_small_cover}"}
+  %br
+    
+  

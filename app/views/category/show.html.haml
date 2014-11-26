@@ -1,0 +1,8 @@
+.h4= "#{@category.name}"
+%hr
+-@category.videos.each do |video|
+  %div{style: 'display: inline-block; padding: 5px'}
+    %br
+    =link_to video_path(video) do
+      = image_tag "/#{video.url_small_cover}"
+

@@ -1,0 +1,14 @@
+.col-md-12
+  %div.col-md-8.bg-primary.text-center{display: 'inline-block'}
+    %img{src: "#{@video.url_large_cover}"}
+  
+  
+  %div.col-md-4.text-left{display: 'inline-block'}
+    .h3.text-left= @video.title
+    %hr
+    .text-left= @video.description
+    %br
+    %button{class: "btn btn-primary", display: "inline-block"}Submit
+    %button{class: "btn btn-default", display: "inline-block"} &#43 My Queue
+
+Rate this video
