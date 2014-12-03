@@ -5,10 +5,39 @@
   
   %div.col-md-4.text-left{display: 'inline-block'}
     .h3.text-left= @video.title
+    %br
+    .h5.text-left="Rate: "+ @video.average_rating.to_s
     %hr
     .text-left= @video.description
     %br
     %button{class: "btn btn-primary", display: "inline-block"}Submit
     %button{class: "btn btn-default", display: "inline-block"} &#43 My Queue
+%hr
+%hr
+.col-md-offset-1 Rate this video
 
-Rate this video
+.col-md-offset-1
+  = form_for [@video, Review.new]  do |f|
+    %label Rate this video
+    = f.select(:rating, [["5 stars",5],["4 stars",4],["3 stars",3],["2 stars",2],["1 stars",1]])
+    %br
+    %label Write Review
+    =f.text_field :description, rows: 6, class: "span6"
+    %br
+    %input(type="submit" value="Submit" class="btn btn-default")
+    = link_to "Cancel", @video
+
+
+.h5.col-md-offset-1= "Users Reviews("+ "#{@video.reviews.count}"+")"
+%hr
+%div
+- @video.reviews.each do |review|
+  %div.col-md-offset-1{style: 'display: inline-block; padding: 5px'}
+    %strong= "Rating: "+ review.rating.to_s + "/5" 
+    %br
+    =precede "by" do
+      %p.text-danger= "#{review.user.name}" 
+  %div.col-md-offset-1.text-top{style: 'display: inline-block; padding: 5px'}
+    %p= review.description
+  %br
+  %hr

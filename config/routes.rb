@@ -6,6 +6,7 @@ Myflix::Application.routes.draw do
     collection do
       post 'search', to: 'videos#search'
     end
+    resources :reviews, only: [:create]
   end
   resources :category
   get '/register', to: "users#new"
@@ -13,4 +14,6 @@ Myflix::Application.routes.draw do
   get '/sign_in', to:"sessions#new"
   resources :sessions, only:[:create]
   get '/sign_out', to:"sessions#destroy"
+  resources :reviews, only:[:create]
+  get '/my_queue', to: "queue_items#index"
 end

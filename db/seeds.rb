@@ -9,6 +9,8 @@
 tv_commedies_cat = Category.create(name: 'TV Commedies')
 tv_dramas_cat = Category.create(name: 'TV Dramas')
 
+User.create(name: "Bob", email:"Bob@email.com", password:"123456")
+
 Video.create(title: "Monk", description: "This is a monk story.", url_small_cover: 'tmp/monk.jpg', url_large_cover: 'tmp/monk_large.jpg', category: tv_commedies_cat)
 Video.create(title: "Family_guy", description: "This is a Family_guy story", url_small_cover: 'tmp/family_guy.jpg', url_large_cover: 'tmp/family_guy.jpg', category: tv_commedies_cat)
 Video.create(title: "Monk", description: "This is a monk story.", url_small_cover: 'tmp/monk.jpg', url_large_cover: 'tmp/monk_large.jpg', category: tv_commedies_cat)
@@ -20,6 +22,9 @@ Video.create(title: "Family_guy", description: "This is a Family_guy story", url
 Video.create(title: "Monk", description: "This is a monk story.", url_small_cover: 'tmp/monk.jpg', url_large_cover: 'tmp/monk_large.jpg', category: tv_commedies_cat)
 Video.create(title: "Family_guy", description: "This is a Family_guy story", url_small_cover: 'tmp/family_guy.jpg', url_large_cover: 'tmp/family_guy.jpg', category: tv_dramas_cat)
 
+Review.create(description: "This is a good movie1", rating: 1, user_id: 1,video_id: 1)
+Review.create(description: "This is a good movie2", rating: 3, user_id: 1,video_id: 1)
+Review.create(description: "This is a good movie3", rating: 3, user_id: 1,video_id: 1)
 
 #family_cat = Category.create(name: 'family', created_at: 10.day.ago)
 #commodies_cat = Category.create(name: 'Commodies', created_at: 11.day.ago)

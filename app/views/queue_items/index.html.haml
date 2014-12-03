@@ -1,0 +1,21 @@
+%div.my_queue_background.place_center
+  %p.h3.strong 
+    My Queue
+  %table.table_width
+    %tr
+      %th List Order
+      %th Video Title
+      %th Play
+      %th Rating
+      %th Genre
+      %th Remove
+    %tbody
+      -@queue_items.each do |queue_item|
+        %tr
+          %td 1
+          %td video title
+          %td Play Button 
+          %td Rating
+          %td Category 
+          %td Remove Button
+  %button Update

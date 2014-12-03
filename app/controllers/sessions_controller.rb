@@ -4,9 +4,9 @@ class SessionsController < ApplicationController
   end
   def create
     @categories = Category.all
-    user = User.find_by(email: params[:email])
-    if !!user && user.authenticate(params[:password])
-    session[:user_id] = user.id
+    @user = User.find_by(email: params[:email])
+    if !!@user && @user.authenticate(params[:password])
+    session[:user_id] = @user.id
     flash[:notice] = 'You signed in successfully.'
     redirect_to home_path
     else
