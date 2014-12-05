@@ -43,8 +43,8 @@ describe Video do
         user = Fabricate(:user)
         video = Fabricate(:video)
         review1 = Fabricate(:review, video: video, rating: 4,user: user)
-        review2 = Fabricate(:review, video: video, rating: 3,user: user)
-        expect(video.average_rating).to eq(3.5)
+        review2 = Fabricate(:review, video: video, rating: 5,user: user)
+        expect(video.average_rating).to eq(4.5)
       end
     end
 

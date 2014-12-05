@@ -11,7 +11,7 @@
     .text-left= @video.description
     %br
     %button{class: "btn btn-primary", display: "inline-block"}Submit
-    %button{class: "btn btn-default", display: "inline-block"} &#43 My Queue
+    = link_to "+Queue", queue_items_path(video_id: @video.id), method: :post, class: 'btn btn-default'
 %hr
 %hr
 .col-md-offset-1 Rate this video
@@ -22,7 +22,7 @@
     = f.select(:rating, [["5 stars",5],["4 stars",4],["3 stars",3],["2 stars",2],["1 stars",1]])
     %br
     %label Write Review
-    =f.text_field :description, rows: 6, class: "span6"
+    =f.text_area :description, rows: 6, class: "span6"
     %br
     %input(type="submit" value="Submit" class="btn btn-default")
     = link_to "Cancel", @video

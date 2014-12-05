@@ -1,6 +1,7 @@
 require 'spec_helper'
 describe Category do
   it { should have_many(:videos)}
+  it { should validate_presence_of(:name)}
   it "has many video" do
       cat = Category.create(name: "DJ god you")
       music_video = Video.create(title: "Music Video", description: "It is a MV" ,category: cat)

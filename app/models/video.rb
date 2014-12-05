@@ -1,6 +1,6 @@
 class Video < ActiveRecord::Base
   has_many :reviews,->{order("created_at DESC")}
-  has_many :myqueuevideos
+  has_many :queueitems
   has_many :myqueues, through: :myqueuevideos
   belongs_to :category
   validates :title, :description, presence: true

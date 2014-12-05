@@ -19,8 +19,8 @@ Video.create(title: "Monk", description: "This is a monk story.", url_small_cove
 Video.create(title: "Family_guy", description: "This is a Family_guy story", url_small_cover: 'tmp/family_guy.jpg', url_large_cover: 'tmp/family_guy.jpg', category: tv_commedies_cat)
 Video.create(title: "Monk", description: "This is a monk story.", url_small_cover: 'tmp/monk.jpg', url_large_cover: 'tmp/monk_large.jpg', category: tv_commedies_cat)
 Video.create(title: "Family_guy", description: "This is a Family_guy story", url_small_cover: 'tmp/family_guy.jpg', url_large_cover: 'tmp/family_guy.jpg', category: tv_dramas_cat)
-Video.create(title: "Monk", description: "This is a monk story.", url_small_cover: 'tmp/monk.jpg', url_large_cover: 'tmp/monk_large.jpg', category: tv_commedies_cat)
-Video.create(title: "Family_guy", description: "This is a Family_guy story", url_small_cover: 'tmp/family_guy.jpg', url_large_cover: 'tmp/family_guy.jpg', category: tv_dramas_cat)
+Video.create(title: "Futurama", description: "This is a future story.", url_small_cover: 'tmp/futurama.jpg', url_large_cover: 'tmp/futurama.jpg', category: tv_commedies_cat)
+Video.create(title: "South Park", description: "This is a south park story", url_small_cover: 'tmp/south_park.jpg', url_large_cover: 'tmp/south_park.jpg', category: tv_dramas_cat)
 
 Review.create(description: "This is a good movie1", rating: 1, user_id: 1,video_id: 1)
 Review.create(description: "This is a good movie2", rating: 3, user_id: 1,video_id: 1)

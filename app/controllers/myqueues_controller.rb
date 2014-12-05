@@ -3,4 +3,7 @@ class MyqueuesController < ApplicationController
   def index
     @myqueue = Myqueue.find_by(user_id: session[:user_id])
   end
+  def create
+    
+  end
 end 
