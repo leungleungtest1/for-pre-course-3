@@ -19,7 +19,7 @@
 .col-md-offset-1
   = form_for [@video, Review.new]  do |f|
     %label Rate this video
-    = f.select(:rating, [["5 stars",5],["4 stars",4],["3 stars",3],["2 stars",2],["1 stars",1]])
+    = f.select(:rating, options_for_video_reviews)
     %br
     %label Write Review
     =f.text_area :description, rows: 6, class: "span6"

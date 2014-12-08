@@ -7,8 +7,8 @@ class ReviewsController < ApplicationController
     @review.user = current_user
     @review.save
     if @review.valid?
+    flash.now[:success] = "Your review is posted"
     render "videos/show"
-    flash[:success] = "Your review is posted"
     else
     flash[:error] = "#{@review.errors.full_messages.join(" ")}"
     redirect_to video_path(@video)

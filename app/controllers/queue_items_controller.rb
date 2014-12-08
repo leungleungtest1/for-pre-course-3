@@ -21,9 +21,10 @@ before_action :require_log_in
 
   def update_queue
     begin
+      #update_queue_rating 
       update_queue_items
     rescue ActiveRecord::RecordInvalid
-            flash[:error] = "list order must be a integer"
+            flash[:error] = "something wrong in your queue"
             redirect_to my_queue_path
             return
     end
@@ -43,8 +44,21 @@ before_action :require_log_in
       ActiveRecord::Base.transaction do
         params[:queue_item].each do |element|
           q_item =  QueueItem.find element[:id]
-          q_item.update_attributes!(position: element[:position]) if q_item.user == current_user
+          q_item.update_attributes!(position: element[:position],rating: element[:rating]) if q_item.user == current_user
         end
       end
-    end     
+    end
+
+    #def update_queue_rating
+      #ActiveRecord::Base.transaction do
+        #params[:queue_item].each do |element|
+          #q_item = QueueItem.find element[:id]
+          #review = Review.where(user_id: session[:user_id], video_id: q_item.video_id).first
+          #if review.nil?
+            #review = Review.create(user_id: session[:user_id],video_id: q_item.video_id, rating: element[:rating])
+          #end
+          #review.update_attributes!(rating: element[:rating])
+        #end
+      #end
+    #end
 end

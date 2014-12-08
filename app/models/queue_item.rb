@@ -8,10 +8,19 @@ class QueueItem < ActiveRecord::Base
   validates_numericality_of :position, {only_integer: true}
 
   def rating
-    review = Review.where(user: user.id, video: video).first
-    if review
-      review.rating
+    find_the_review
+    if @review
+      @review.rating
     end
+  end
+
+  def rating=(new_rating)
+    find_the_review
+    if @review
+      @review.update_column(:rating, new_rating)
+    else
+      @review=Review.create(user: user, video:video, rating: new_rating)
+    end    
   end
   def category_name
     if category
@@ -25,5 +34,9 @@ private
     if self.position == nil
       self.position = self.id
     end
+  end
+
+  def find_the_review
+    @review ||= Review.where(user: user, video: video).first
   end
 end

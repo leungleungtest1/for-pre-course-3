@@ -4,20 +4,23 @@ require 'faker'
 
 describe QueueItemsController do
   describe "GET index" do
-    it "sets @queue_items to the queue items of the logged in user" do
-      alice = Fabricate(:user)
-      monk = Fabricate(:video)
-      session[:user_id] = alice.id
-      queue_item1 = Fabricate(:queue_item, user: alice)
-      queue_item2 = Fabricate(:queue_item, user: alice, video: monk)
-      get :index
-      expect(assigns(:queue_items)).to match_array([queue_item1,queue_item2])
+    context "set the tests" do
+      let(:alice) {Fabricate(:user)}
+      let(:monk) {Fabricate(:video)}
+      let(:queue_item1) {Fabricate(:queue_item, user: alice)}
+      let(:queue_item2) {Fabricate(:queue_item, user:alice, video:monk)}
+      before do 
+        session[:user_id] = alice.id
+      end
+      it "sets @queue_items to the queue items of the logged in user" do
+        get :index
+        expect(assigns(:queue_items)).to match_array([queue_item1,queue_item2])
+      end
     end
-
-    it "redirects to the sing in page for unauthenticated users" do
-      get :index
-      expect(response).to redirect_to sign_in_path
-    end
+      it "redirects to the sing in page for unauthenticated users" do
+        get :index
+        expect(response).to redirect_to sign_in_path
+      end
   end
 
   describe "POST create" do
@@ -58,7 +61,7 @@ describe QueueItemsController do
       session[:user_id] = user.id
       second_last_queue = QueueItem.create(user: user, video: @video)
       second_last_queue.save
-      post :create, video_id: @video.id
+      post :create, video_id: @video.id 
       expect(user.queue_items.count).to eq(1)
     end
     it "redirects to my_queue when a queue_item create successfully."  do
@@ -113,8 +116,8 @@ describe QueueItemsController do
 
   describe "POST update_queue" do
     context "with valid input" do
+      let(:alice) {Fabricate(:user)}
       it "redirects to my queue page" do
-        alice = Fabricate(:user)
         session[:user_id] = alice.id
         queue_item1 = Fabricate(:queue_item, user: alice, position: 1)
         queue_item2 = Fabricate(:queue_item, user: alice, position: 2)
@@ -122,15 +125,15 @@ describe QueueItemsController do
         expect(response).to redirect_to my_queue_path
       end
       it "orders the queue items" do
-        alice = Fabricate(:user)
         session[:user_id] = alice.id
-        queue_item1 = Fabricate(:queue_item, user: alice, position: 1)
-        queue_item2 = Fabricate(:queue_item, user: alice, position: 2)
-        post :update_queue, queue_item: [{id: queue_item1.id, position: 4},{id:queue_item2.id, position: 3}]
+        monk = Fabricate(:video)
+        family_guy = Fabricate(:video)
+        queue_item1 = Fabricate(:queue_item, user: alice, video: monk,position: 5)
+        queue_item2 = Fabricate(:queue_item, user: alice, video: family_guy,position: 6)
+        post :update_queue, queue_item: [{id: queue_item1.id, position: 4, rating: 1},{id:queue_item2.id, position: 3, rating: 1}]
         expect(alice.queue_items).to eq([queue_item2,queue_item1])
       end
       it "normalize the position numbers" do
-        alice = Fabricate(:user)
         session[:user_id] = alice.id
         queue_item1 = Fabricate(:queue_item, user: alice, position: 1)
         queue_item2 = Fabricate(:queue_item, user: alice, position: 2)
@@ -138,6 +141,26 @@ describe QueueItemsController do
         expect(QueueItem.all.map(&:position)).to eq([1,2])
       end
 
+      it "update the rating when a review of it exists" do 
+        monk = Fabricate(:video)
+        family_guy = Fabricate(:video)
+        review_of_m1 = Fabricate(:review,user: alice,video:monk)
+        review_of_f2 = Fabricate(:review,user: alice,video:family_guy)
+        session[:user_id] = alice.id
+        queue_item1 = Fabricate(:queue_item, user: alice, position: 1, video: monk)
+        queue_item2 = Fabricate(:queue_item, user: alice, position: 2, video: family_guy)
+        post :update_queue, queue_item: [{id: queue_item1.id, position: 1,rating: 5},{id:queue_item2.id, position: 2, rating: 3}]
+        expect(QueueItem.all.map(&:rating)).to eq([5,3])
+      end
+      it "create a review of rating when a review of it exists" do
+        monk = Fabricate(:video)
+        family_guy = Fabricate(:video)
+        session[:user_id] = alice.id
+        queue_item1 = Fabricate(:queue_item, user: alice, position: 1, video: monk)
+        queue_item2 = Fabricate(:queue_item, user: alice, position: 2, video: family_guy)
+        post :update_queue, queue_item: [{id: queue_item1.id, position: 1,rating: 5},{id:queue_item2.id, position: 2, rating: 3}]
+        expect(QueueItem.all.map(&:rating)).to eq([5,3])
+      end
     end
     context "with invalid input" do
       it "redirects my queue page" do
@@ -164,6 +187,29 @@ describe QueueItemsController do
         post :update_queue, queue_item: [{id: queue_item1.id, position: 4},{id:queue_item2.id, position: 4.6}]
         expect(QueueItem.all.map(&:position)).to eq([1,2])
       end
+ 
+      #it "does not change the rating." do
+        #alice = Fabricate(:user)
+        #monk = Fabricate(:video)
+        #family_guy = Fabricate(:video)
+        #review_of_m1 = Fabricate(:review,user: alice,video:monk,rating: 1)
+        #review_of_f2 = Fabricate(:review,user: alice,video:family_guy,rating: 2)
+        #session[:user_id] = alice.id
+        #queue_item1 = Fabricate(:queue_item, user: alice, position: 1, video: monk)
+        #queue_item2 = Fabricate(:queue_item, user: alice, position: 2, video: family_guy)
+        #post :update_queue, queue_item: [{id: queue_item1.id, position: 1,rating: 3},{id:queue_item2.id, position: 2, rating: "string"}]
+        #expect(QueueItem.all.map(&:rating)).to eq([1,2])
+      #end
+      it "does not create a review of the rating when it does not exit" do
+        alice = Fabricate(:user)
+        monk = Fabricate(:video)
+        family_guy = Fabricate(:video)
+        session[:user_id] = alice.id
+        queue_item1 = Fabricate(:queue_item, user: alice, position: 1, video: monk)
+        queue_item2 = Fabricate(:queue_item, user: alice, position: 2, video: family_guy)
+        post :update_queue, queue_item: [{id: queue_item1.id, position: 1,rating: 3},{id:queue_item2.id, position: 2, rating: "string"}]
+        expect(Review.count).to eq(1)
+      end
     end
     context "with unauthenticated users" do
       it "redirect_to sign_in page" do
@@ -183,6 +229,29 @@ describe QueueItemsController do
         queue_item2 = Fabricate(:queue_item, user: bob, position: 2)
         post :update_queue, queue_item: [{id: queue_item1.id, position: 4},{id:queue_item2.id, position: 3}]
         expect(queue_item1.reload.position).to eq(1)
+      end
+
+      it "does not change the change" do
+        alice = Fabricate(:user)
+        monk = Fabricate(:video)
+        family_guy = Fabricate(:video)
+        review_of_m1 = Fabricate(:review,user: alice,video:monk,rating:1)
+        review_of_f2 = Fabricate(:review,user: alice,video:family_guy, rating:3)
+        queue_item1 = Fabricate(:queue_item, user: alice, position: 1, video: monk)
+        queue_item2 = Fabricate(:queue_item, user: alice, position: 2, video: family_guy)
+        post :update_queue, queue_item: [{id: queue_item1.id, position: 1,rating: 5},{id:queue_item2.id, position: 2, rating: 3}]
+        expect(QueueItem.all.map(&:rating)).to eq([1,3])
+      end
+      it "does not create a review of the rating when it does not exit" do
+        bob = Fabricate(:user)
+        alice = Fabricate(:user)
+        monk = Fabricate(:video)
+        family_guy = Fabricate(:video)
+        session[:user_id] = bob.id
+        queue_item1 = Fabricate(:queue_item, user: alice, position: 1, video: monk)
+        queue_item2 = Fabricate(:queue_item, user: alice, position: 2, video: family_guy)
+        post :update_queue, queue_item: [{id: queue_item1.id, position: 1,rating: 5},{id:queue_item2.id, position: 2, rating: 3}]
+        expect(QueueItem.all.map(&:rating)).to eq([nil,nil])
       end
     end
   end
