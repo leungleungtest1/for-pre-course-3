@@ -2,11 +2,8 @@ require 'spec_helper'
 describe QueueItem do
   it {should belong_to(:user)}
   it {should belong_to(:video)}
-  it "should have default position as its id" do
-    queue_item = Fabricate(:queue_item)
-    queue_item.save
-    expect(queue_item.position).to eq(queue_item.id)
-  end
+  it {should validate_numericality_of(:position).only_integer}
+
   describe "#video_title" do
     it "return the title of associated video" do
       video = Fabricate(:video, title:"Monk")

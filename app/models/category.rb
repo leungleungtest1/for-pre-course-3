@@ -1,5 +1,5 @@
 class Category < ActiveRecord::Base
-  has_many :videos, -> {order('title ASC')}
+  has_many :videos, -> {order 'title asc'}
   validates :name, uniqueness: true
   validates :name, presence: true
   def recent_videos
