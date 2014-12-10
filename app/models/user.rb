@@ -20,4 +20,7 @@ has_many :queue_items,-> { order 'position asc'}
     def not_add_video_to_queue(video)
       queue_items.where(video_id: video.id).count
     end
+    def have_queued_video?(video)
+      QueueItem.where(user_id: self.id, video_id: video.id).empty?
+    end
 end 
