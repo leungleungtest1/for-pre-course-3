@@ -2,6 +2,7 @@ require "spec_helper"
 
 describe User do
   it { should have_many(:queue_items).order('position asc')}
+  it { should have_many(:reviews).order('created_at desc')}
 
   describe "#have_queued_video?" do
     let(:user){Fabricate(:user)}
@@ -12,6 +13,18 @@ describe User do
     end
     it "returns true wehn user do not queue the vidoe" do
       expect(user.have_queued_video?(video)).to eq(true)
+    end
+  end
+
+  describe "#follow?" do
+    let(:alice){Fabricate(:user)}
+    let(:bob){Fabricate(:user)}
+    it "returns true when user follow the leader" do
+      relationship = Fabricate(:relationship, leader_id: bob.id, follower_id: alice.id)
+      expect(alice.follow?(bob)).to eq(true)
+    end
+    it "returns false when user does not follow the leader" do
+      expect(alice.follow?(bob)).to eq(false)
     end
   end
 end

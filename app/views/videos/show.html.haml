@@ -36,7 +36,7 @@
     %strong= "Rating: "+ review.rating.to_s + "/5" 
     %br
     =precede "by" do
-      %p.text-danger= "#{review.user.name}" 
+      =link_to " #{review.user.name}", user_path(review.user) 
   %div.col-md-offset-1.text-top{style: 'display: inline-block; padding: 5px'}
     %p= review.description
   %br

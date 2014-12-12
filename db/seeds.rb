@@ -9,8 +9,12 @@
 tv_commedies_cat = Category.create(name: 'TV Commedies')
 tv_dramas_cat = Category.create(name: 'TV Dramas')
 
-User.create(name: "Bob", email:"Bob@email.com", password:"123456")
-
+bob= User.create(name: "Bob", email:"Bob@email.com", password:"123456")
+alice=User.create(name: "Alice", email: "Alice@email.com", password: "123456")
+tony = User.create(name: "Tony", email: "Tony@email.com", password: "123456")
+jenny = User.create(name: "Jenny", email: "Jenny@email.com", password: "123456")
+ruby = User.create(name: "Ruby", email: "Ruby@email.com", password: "123456")
+music = User.create(name: "Music", email: "Music@email.com", password: "123456")
 Video.create(title: "Monk", description: "This is a monk story.", url_small_cover: 'tmp/monk.jpg', url_large_cover: 'tmp/monk_large.jpg', category: tv_commedies_cat)
 Video.create(title: "Family_guy", description: "This is a Family_guy story", url_small_cover: 'tmp/family_guy.jpg', url_large_cover: 'tmp/family_guy.jpg', category: tv_commedies_cat)
 Video.create(title: "Monk", description: "This is a monk story.", url_small_cover: 'tmp/monk.jpg', url_large_cover: 'tmp/monk_large.jpg', category: tv_commedies_cat)
@@ -25,6 +29,41 @@ Video.create(title: "South Park", description: "This is a south park story", url
 Review.create(description: "This is a good movie1", rating: 1, user_id: 1,video_id: 1)
 Review.create(description: "This is a good movie2", rating: 3, user_id: 1,video_id: 1)
 Review.create(description: "This is a good movie3", rating: 3, user_id: 1,video_id: 1)
+
+Review.create(description: "This is a good movie1", rating: 1, user_id: 2,video_id: 2)
+Review.create(description: "This is a good movie2", rating: 3, user_id: 3,video_id: 3)
+Review.create(description: "This is a good movie3", rating: 3, user_id: 1,video_id: 4)
+
+(1..4).to_a.each_with_index do |element, index|
+  QueueItem.create(video_id:element, user: bob, position: index)
+end
+(1..5).to_a.each_with_index do |element, index|
+  QueueItem.create(video_id:element, user: alice, position: index)
+end
+
+[2,3,5,6].each_with_index do |element, index|
+  QueueItem.create(video_id:element, user: tony, position: index)
+end
+
+(1..5).to_a.each_with_index do |element, index|
+  QueueItem.create(video_id:element, user: music, position: index)
+end
+
+(2..6).to_a.each_with_index do |element, index|
+  bob.followers<< (User.find element)
+  bob.leaders<< (User.find element)
+end
+(3..6).to_a.each_with_index do |element, index|
+  alice.followers<< (User.find element)
+  alice.leaders<< (User.find element)
+end
+
+(1..5).to_a.each_with_index do |element, index|
+  music.followers<< (User.find element)
+  music.leaders<< (User.find element)
+end
+
+
 
 #family_cat = Category.create(name: 'family', created_at: 10.day.ago)
 #commodies_cat = Category.create(name: 'Commodies', created_at: 11.day.ago)

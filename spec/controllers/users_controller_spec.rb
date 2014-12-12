@@ -35,4 +35,25 @@ describe UsersController do
       expect(response).to render_template('pages/front')
     end
   end
+
+  describe "GET show" do
+    let(:bob) {Fabricate(:user)}
+    before do 
+      set_current_user_alice
+    end
+    it "sets a variable @user" do
+      get :show, id: bob.id
+      expect(assigns(:user).name).to eq(bob.name)
+    end
+    it "renders show template" do
+      get :show, id:bob.id
+      expect(response).to render_template('users/show')
+    end
+    it "redirects a sign in page when unauthenticated user" do
+      set_current_user_nil
+      get :show, id:bob.id
+      expect(response).to redirect_to sign_in_path
+    end
+  end
+
 end

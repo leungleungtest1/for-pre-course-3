@@ -1,0 +1,23 @@
+%section.people
+  %header
+    %h2 People I Follow
+  %table.table
+    %thead
+      %tr
+        %th(width="30%") Name 
+        %th(width="20%") Videos in Queue
+        %th(width="20%") Followers
+        %th(width="30%") Unfollow
+    %tbody
+      - @user.leaders.uniq.each do |leader|
+        %tr
+          %td 
+            = link_to user_path(leader) do
+              -leader.name
+          %td 
+            = leader.queue_items.count
+          %td 
+            = leader.followers.count
+          %th 
+            = link_to people_path(leader), method: :delete do
+              %i.glyphicon.glyphicon-remove
