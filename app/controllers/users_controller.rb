@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     @categories = Category.all
      @user = User.create( params.require(:user).permit(:name, :password,:email))
     if @user.valid?
-      UserMailer.welcome_email(@user).deliver
+      AppMailer.send_welcome_email(@user).deliver
       flash[:success] = "#{@user.name} register successfully."
            redirect_to sign_in_path
      else

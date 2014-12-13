@@ -1,43 +1,45 @@
-.col-md-12
-  %div.col-md-8.bg-primary.text-center{display: 'inline-block'}
-    %img{src: "/#{@video.url_large_cover}"}
-  
-  
-  %div.col-md-4.text-left{display: 'inline-block'}
-    .h3.text-left= @video.title
-    %br
-    .h5.text-left="Rate: "+ @video.average_rating.to_s
-    %hr
-    .text-left= @video.description
-    %br
-    %button{class: "btn btn-primary", display: "inline-block"}Submit
-    = link_to "+Queue", queue_items_path(video_id: @video.id), method: :post, class: 'btn btn-default' if current_user.have_queued_video?(@video)
-%hr
-%hr
-.col-md-offset-1 Rate this video
+%article.video
+  .container
+    .row
+      .video_large_cover.col-sm-7.col-sm-offset-1
+        %img{src: "/#{@video.url_large_cover}"}
+      .video_info.col-sm-3
+        %header
+          %h3= @video.title
+          %span="Rate: "+ @video.average_rating.to_s
+        %p= @video.description
+        .actions
+          %a.btn.btn-primary(href="") Watch Now
+          = link_to "+Queue", queue_items_path(video_id: @video.id), method: :post, class: 'btn btn-default' if current_user.have_queued_video?(@video)
 
-.col-md-offset-1
-  = form_for [@video, Review.new]  do |f|
-    %label Rate this video
-    = f.select(:rating, options_for_video_reviews)
-    %br
-    %label Write Review
-    =f.text_area :description, rows: 6, class: "span6"
-    %br
-    %input(type="submit" value="Submit" class="btn btn-default")
-    = link_to "Cancel", @video
+%section.reviews.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      %form
+        %fieldset
+          .form-group
+            %label Rate this video
+            .row
+              .col-sm-3
+                = form_for [@video, Review.new]  do |f|
+                  %label Rate this video
+                  = f.select(:rating, options_for_video_reviews)
+                  %br
+                  %label Write Review
+                  =f.text_area :description, rows: 6, class: "span6"
+                  %br
+                  %input(type="submit" value="Submit" class="btn btn-default")
+                  = link_to "Cancel", @video
 
-
-.h5.col-md-offset-1= "Users Reviews("+ "#{@video.reviews.count}"+")"
-%hr
-%div
-- @video.reviews.each do |review|
-  %div.col-md-offset-1{style: 'display: inline-block; padding: 5px'}
-    %strong= "Rating: "+ review.rating.to_s + "/5" 
-    %br
-    =precede "by" do
-      =link_to " #{review.user.name}", user_path(review.user) 
-  %div.col-md-offset-1.text-top{style: 'display: inline-block; padding: 5px'}
-    %p= review.description
-  %br
-  %hr
+      %header
+        %h3= "Users Reviews("+ "#{@video.reviews.count}"+")"
+      %ul
+        - @video.reviews.each do |review|
+          %article.review
+            %li.row
+              .col-sm-2
+                %span= "Rating: "+ review.rating.to_s + "/5" 
+                =precede "by" do
+                  =link_to " #{review.user.name}", user_path(review.user)
+              .col-sm-8
+                %p= review.description
