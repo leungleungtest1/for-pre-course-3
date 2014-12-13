@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.1.1'
+ruby '2.0.0'
 gem 'autoprefixer-rails'
 gem 'bootstrap-sass'
 gem 'coffee-rails'
@@ -14,6 +14,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'bootstrap-form'
 gem 'fabrication'
 gem 'faker'
+gem 'mail'
 group :development do
   gem 'thin'
   gem "better_errors"
@@ -35,5 +36,6 @@ end
 
 group :production do
   gem 'rails_12factor'
+  gem 'mail'
 end
 

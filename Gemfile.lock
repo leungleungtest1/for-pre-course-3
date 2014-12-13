@@ -194,6 +194,7 @@ DEPENDENCIES
   haml-rails
   jquery-rails
   launchy
+  mail
   pg
   pry
   pry-nav
