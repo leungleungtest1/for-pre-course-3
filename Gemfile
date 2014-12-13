@@ -14,7 +14,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'bootstrap-form'
 gem 'fabrication'
 gem 'faker'
-gem 'mail'
+
 group :development do
   gem 'thin'
   gem "better_errors"
