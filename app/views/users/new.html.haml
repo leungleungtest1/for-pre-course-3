@@ -1,3 +1,25 @@
+%section.register.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      %form.form-horizontal
+        %header
+          %h1 Register
+        %fieldset
+          = form_for @user  do |f|
+            .form-group
+              %label.control-label.col-sm-2= f.label :Email_Address
+              .col-sm-6
+                = f.text_field :email
+            .form-group
+              %label.control-label.col-sm-2= f.label :Password
+              .col-sm-6
+                = f.password_field :password
+            .form-group
+              %label.control-label.col-sm-2= f.label :Full_name
+              .col-sm-6
+                = f.text_field :name
+            = f.submit "Sign Up"
+
 %section.register
   Register
   = form_for @user  do |f|
