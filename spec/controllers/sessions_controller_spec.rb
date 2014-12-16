@@ -40,7 +40,7 @@ describe SessionsController do
     it "sets flash notice when it is authenicated" do
       user = Fabricate(:user)
       post :create, {email: user.email, password: "123456"}
-      expect(flash[:notice]).not_to be_blank
+      expect(flash[:success]).not_to be_blank
     end
   end
   describe 'GET destroy' do
@@ -60,7 +60,7 @@ describe SessionsController do
       user= Fabricate(:user)
       session[:user_id] = user.id
       get :destroy
-      expect(flash[:notice]).not_to be_blank
+      expect(flash[:success]).not_to be_blank
     end
   end
 end

@@ -10,13 +10,14 @@ class SessionsController < ApplicationController
     flash[:success] = 'You signed in successfully.'
     redirect_to home_path
     else
-      flash[:error] = "There are some wrong in emails or password."
+      flash.now[:danger] = "There are some wrong in emails or password."
       render 'sessions/new'
     end
   end
 
   def destroy
     session[:user_id] = nil
-    redirect_to root_path, notice: "you are signed out."
+    flash[:success] = "you are signed out."
+    redirect_to root_path
   end
 end

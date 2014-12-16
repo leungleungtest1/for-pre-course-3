@@ -17,8 +17,9 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find params[:id]
+    @user = User.find_by_token params[:id]
     render "show"
   end
+
 
 end

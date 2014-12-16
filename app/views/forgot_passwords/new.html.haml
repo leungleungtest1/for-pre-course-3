@@ -1,0 +1,17 @@
+.row
+  .row
+    = form_tag(forgot_passwords_path,method: "post")
+    .row
+      .col-sm-4 
+        %h2
+          Forgot Password?
+        %p
+          We will send you email with a link that you can use to reset your passwords
+    .row
+      .col-sm-2
+        = label_tag(:email, "Email Address")
+        %br
+        = text_field_tag(:email)
+    .row
+      .col-sm-2
+        = submit_tag(" Send Email ")

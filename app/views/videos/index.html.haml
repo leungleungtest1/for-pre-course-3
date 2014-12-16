@@ -1,10 +1,11 @@
 - @categories.each do |category|
-  %p= category.name
-  - category.recent_videos.each do |video|
-    %div{style: 'display: inline-block; padding: 5px'}
-      %br
-      %a{href: "videos/#{video.id}"}
-        %img.for_capypara_img{src: "/#{video.url_small_cover}"}
-  %br
+  %article.video_category
+    %header
+      %h3= link_to category.name, category_path(category)
+      - category.recent_videos.each do |video|
+        %div{style: 'display: inline-block; padding: 5px'}
+          %br
+          %a{href: "videos/#{video.id}"}
+            %img.for_capypara_img{src: "/#{video.url_small_cover}"}
     
   

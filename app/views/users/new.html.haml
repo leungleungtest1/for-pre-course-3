@@ -1,16 +1,17 @@
-%section.register.container
+%section.register
   .row
     .col-sm-10.col-sm-offset-1
-      %h1 Register
       = form_for @user  do |f|
-        = f.label :Email_Address
-        = f.text_field :email
-        %br
-        = f.label :Password
-        = f.password_field :password
-        %br
-        = f.label :Full_name
-        = f.text_field :name
+        %h3 Register
+        .row
+          .col-sm-2= f.label :Email_Address
+          .col-sm-2= f.text_field :email
+        .row
+          .col-sm-2= f.label :Password
+          .col-sm-2= f.password_field :password
+        .row
+          .col-sm-2= f.label :Full_name
+          .col-sm-2= f.text_field :name
         %br
         = f.submit "Sign Up"
 

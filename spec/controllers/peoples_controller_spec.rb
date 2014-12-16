@@ -40,15 +40,15 @@ describe PeoplesController do
       expect(response).to redirect_to sign_in_path
     end
     it "remove the selected leader from the user list" do
-      delete :destroy, id: bob.id
+      delete :destroy, id: bob.token
       expect(alice.leaders.count).to eq(1)
     end
     it "flash a success message" do
-      delete :destroy, id: bob.id
+      delete :destroy, id: bob.token
       expect(flash[:success]).not_to be_nil
     end
     it "render people page" do
-      delete :destroy, id: bob.id
+      delete :destroy, id: bob.token
       expect(response).to redirect_to peoples_path
     end
   end

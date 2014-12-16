@@ -1,0 +1,11 @@
+.row
+  .col-sm-4
+    = form_tag password_resets_path do 
+      .row
+        %h2 Reset Your Password
+        = hidden_field_tag(:token, @token)
+        = label_tag :password, "New Password"
+        %br
+        = text_field_tag :password
+        %br
+        = submit_tag "Reset password", id: :reset

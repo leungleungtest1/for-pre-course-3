@@ -1,4 +1,4 @@
-%section.user.container
+%section.user
   %article
     %header
       %h2= @user.name
@@ -15,15 +15,16 @@
                 %td=link_to "#{queue_item.video.title}", video_path(queue_item.video)
                 %td=link_to "#{queue_item.video.category.name}", category_path(queue_item.video.category)
 
-%section.user_reviews.container
+%section.user_reviews
   %header
     %h3= "Reviews (#{@user.reviews.count})"
   %ul
     -@user.reviews.each do |review|
       %article.review
         %li
-          .span2
-            %p= link_to "#{review.video.title}", video_path(review.video)
-            %span Rating: #{review.rating}/5
-          .span8
-            %p= review.description
+          .row
+            .col-md-1
+              %p= link_to "#{review.video.title}", video_path(review.video)
+              %span Rating: #{review.rating}/5
+            .col-md-9
+              %p= review.description

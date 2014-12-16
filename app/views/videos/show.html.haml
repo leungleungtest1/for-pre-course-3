@@ -1,8 +1,8 @@
 %article.video
   .container
     .row
-      .video_large_cover.col-sm-7.col-sm-offset-1
-        %img{src: "/#{@video.url_large_cover}"}
+      .col-sm-7.col-sm-offset-1
+        %img.video_large_cover{src: "/#{@video.url_large_cover}"}
       .video_info.col-sm-3
         %header
           %h3= @video.title
@@ -15,21 +15,14 @@
 %section.reviews.container
   .row
     .col-sm-10.col-sm-offset-1
-      %form
-        %fieldset
-          .form-group
-            %label Rate this video
-            .row
-              .col-sm-3
-                = form_for [@video, Review.new]  do |f|
-                  %label Rate this video
-                  = f.select(:rating, options_for_video_reviews)
-                  %br
-                  %label Write Review
-                  =f.text_area :description, rows: 6, class: "span6"
-                  %br
-                  %input(type="submit" value="Submit" class="btn btn-default")
-                  = link_to "Cancel", @video
+      = form_for [@video, Review.new] do |f|
+        %label.row Rate this video
+        .row= f.select(:rating, options_for_video_reviews, class: "col-sm-3")
+        %label.row Write Review
+        .row.margin_bottom_10=f.text_area :description, rows: 6, class: "col-sm-8"
+        .row
+          %input(type="submit" value="Submit" class="btn btn-default")
+          = link_to "Cancel", @video, class: "btn btn-default"
 
       %header
         %h3= "Users Reviews("+ "#{@video.reviews.count}"+")"

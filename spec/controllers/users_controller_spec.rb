@@ -14,6 +14,26 @@ describe UsersController do
       expect(response).to render_template('new')
     end
   end
+  context "send a email" do
+    after {ActionMailer::Base.deliveries.clear}
+    before {ActionMailer::Base.deliveries.clear}
+    it "sends a email with valid input" do
+      post :create, user: {name: "Bob", password: "123456", email:"user@email.com"}
+      expect(ActionMailer::Base.deliveries).not_to be_nil
+    end
+    it "sends a email to the right receiver with valid input" do
+      post :create, user: {name: "Bob", password: "123456", email:"user@email.com"}
+      expect(ActionMailer::Base.deliveries.last.to).to eq(["user@email.com"])
+    end
+    it "sends a email to the right context with valid input"  do
+      post :create, user: {name: "Bob", password: "123456", email:"user@email.com"}
+      expect(ActionMailer::Base.deliveries.last.body).to include("Welcome to MyFlix, Bob!")
+    end
+    it "doesnot send an email with invalid input" do
+      post :create, user: {email:"John@email.com"}
+      expect(ActionMailer::Base.deliveries).to eq([])
+    end
+  end
   describe "POST create" do
     it "set a variable @categories" do
       cat1 = Fabricate(:category)
@@ -42,7 +62,7 @@ describe UsersController do
       set_current_user_alice
     end
     it "sets a variable @user" do
-      get :show, id: bob.id
+      get :show, id: bob.token
       expect(assigns(:user).name).to eq(bob.name)
     end
     it "renders show template" do

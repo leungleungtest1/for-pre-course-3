@@ -5,7 +5,7 @@ class PeoplesController < ApplicationController
   end
 
   def destroy
-    user = User.find params[:id]
+    user = User.find_by( token: params[:id])
     current_user.leaders.delete(user)
     @user = current_user
     flash[:success] = "you unfollow #{user.name} successfully."

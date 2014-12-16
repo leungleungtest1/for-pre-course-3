@@ -1,4 +1,4 @@
-%section.my_queue.container
+%section.my_queue
   .row
     .col-sm-10.col-sm-offset-1
       %article
@@ -20,8 +20,8 @@
                     = hidden_field_tag "queue_item[][id]", queue_item.id
                     %td= text_field_tag "queue_item[][position]", queue_item.position, data: {video_id: queue_item.video.id}
                     %td= link_to queue_item.video_title, queue_item.video
-                    %td= button_to "Play", class: "btn"  
-                    %td= select_tag "queue_item[][rating]",options_for_video_reviews(queue_item.rating), include_blank: true
+                    %td= link_to "Play","" ,class: "btn btn-default"  
+                    %td= select_tag "queue_item[][rating]",options_for_video_reviews(queue_item.rating), include_blank: true, class: "dropdown"
                     %td= link_to queue_item.category_name, queue_item.video.category
                     %td
                       = link_to queue_item_path(queue_item), method: :delete do

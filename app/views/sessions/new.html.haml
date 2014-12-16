@@ -1,10 +1,19 @@
-.bg-warning.col-sm-12
-  Sign in
+.row
   = form_tag(sessions_path, method: "post") do
-    = label_tag(:email, "Email Address")
-    = text_field_tag(:email)
-    %br
-    = label_tag(:password, "Password")
-    = password_field_tag(:password)
-    %br
-    = submit_tag("Sign in")
+    .row
+      .col-sm-2
+        %h3 Sign in
+    .row
+      .col-sm-2
+        = label_tag(:email, "Email Address")
+      .col-sm-2
+        = text_field_tag(:email)
+    .row
+      .col-sm-2
+        = label_tag(:password, "Password")
+      .col-sm-2
+        = password_field_tag(:password)
+    .row
+      .col-sm-1.col-sm-offset-2
+        = submit_tag("Sign in", class: "btn btn-default")
+      =link_to "forgot password?", forgot_password_path, class: "btn btn-success"

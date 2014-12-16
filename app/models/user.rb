@@ -1,9 +1,11 @@
 class User < ActiveRecord::Base
+before_create :create_token_for_new_user
 has_many :reviews, -> {order 'created_at desc'}
 has_secure_password validations: false
 validates :name, presence: true
-validates :password, presence: true, length: {minimum: 4}
-validates :email, uniqueness: true
+validates :password, presence: true, length: {minimum: 4}, on: :create
+validates :password, presence: true, length: {minimum: 4}, on: :update, allow_blank: true
+validates :email, uniqueness: true, case_sensitive: false
 has_many :queue_items,-> { order 'position asc'}
 has_many :followerships, class_name: "Relationship", foreign_key: "follower_id"
 has_many :leaders, through: :followerships
@@ -27,5 +29,13 @@ has_many :followers, through: :leaderships
     end
     def follow?(leader)
       leaders.include?(leader)
+    end
+
+    def to_param
+      self.token
+    end
+
+    def create_token_for_new_user
+      self.token = SecureRandom.urlsafe_base64
     end
 end 

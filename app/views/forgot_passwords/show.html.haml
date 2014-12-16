@@ -1,0 +1,12 @@
+.row
+  .col-sm-4
+    = form_tag("/users/@user.token", method: "update") do 
+      .row
+        %h2 Reset Your Password
+      .row
+        = hidden_field_tag(:id, @user.id)
+        = label_tag :password, "Password"
+        %br
+        = text_field_tag :password
+        %br
+        = submit_tag "Reset password", id: :reset

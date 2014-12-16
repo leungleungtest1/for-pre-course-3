@@ -18,13 +18,13 @@ feature 'people follow' do
     find(:xpath, "//a[@href='videos/#{@monk.id}']").click
     expect(page).to have_content "#{@bob.name}"
     #now on video page of monk
-    find(:xpath, "//a[@href='/users/#{@bob.id}']").click
+    find(:xpath, "//a[@href='/users/#{@bob.token}']").click
     expect(page).to have_content "#{@bob.name}"
     #now on bob profile page
     click_link("Follow")
     expect(page).to have_content "#{@bob.name}"
     #now on alice people page
-    find(:xpath, "//a[@href='/peoples/#{@bob.id}']").click
+    find(:xpath, "//a[@href='/peoples/#{@bob.token}']").click
     expect(page).to have_content "unfollow #{@bob.name}"
   end
 end

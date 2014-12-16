@@ -5,4 +5,8 @@ class AppMailer < ActionMailer::Base
     mail to: user.email, from: "info@myflix.com", subject: "Welcome to Myflix!"
 
   end
+  def set_pp_email(user)
+    @user= user
+    mail to: user.email, from: "info@myflix.com", subject: "Reset your password"
+  end
 end
