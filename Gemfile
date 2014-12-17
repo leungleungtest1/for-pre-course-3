@@ -12,9 +12,7 @@ gem 'pg'
 gem 'rvm'
 gem 'bcrypt', '~> 3.1.7'
 gem 'bootstrap-form'
-gem 'fabrication'
-gem 'faker'
-gem 'capybara-email'
+
 
 group :development do
   gem 'thin'
@@ -30,6 +28,9 @@ group :development, :test do
 end
 
 group :test do
+  gem 'fabrication'
+  gem 'faker'
+  gem 'capybara-email'
   gem 'database_cleaner', '1.2.0'
   gem 'shoulda-matchers'
   gem 'capybara'
