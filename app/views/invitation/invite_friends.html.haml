@@ -1,0 +1,31 @@
+%section.invite.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      %div.invite
+        %header
+          %h1 
+        = form_tag (invite_friend_path) do
+          .row
+            .col-sm-6
+              %h1.font_size_100per Invite a friend to join MyFlix!
+          .row
+            .col-sm-4
+              = label_tag(:name, "Friend Name")
+          .row
+            .col-sm-4
+              = text_field_tag(:name)
+          .row
+            .col-sm-4
+              = label_tag(:email, "Friend's Email Address")
+          .row
+            .col-sm-4
+              = text_field_tag(:email)
+          .row
+            .col-sm-4
+              = label_tag(:message, "Invitation Message")
+          .row
+            .col-sm-6
+              = text_area_tag(:message, "Please join this really cool site!", cols: "30", rows: "6")
+          .row
+            .col-sm-4
+              = submit_tag("Send Invitation")

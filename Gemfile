@@ -14,6 +14,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'bootstrap-form'
 gem 'fabrication'
 gem 'faker'
+gem 'capybara-email'
 
 group :development do
   gem 'thin'

@@ -5,13 +5,14 @@
         %h3 Register
         .row
           .col-sm-2= f.label :Email_Address
-          .col-sm-2= f.text_field :email
+          .col-sm-2= f.text_field :email, value: @email
         .row
           .col-sm-2= f.label :Password
           .col-sm-2= f.password_field :password
         .row
           .col-sm-2= f.label :Full_name
           .col-sm-2= f.text_field :name
+          =hidden_field_tag :token, value: @token
         %br
         = f.submit "Sign Up"
 

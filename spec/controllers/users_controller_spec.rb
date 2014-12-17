@@ -49,6 +49,21 @@ describe UsersController do
       expect(assigns(:user)).not_to be_a_new(User)
       expect(response).to redirect_to sign_in_path
     end
+    it "creates a leadership and followership with invitor when @user is valid and there is invitor" do
+      budda = Fabricate(:user)
+      budda.update_column(:token, "7890")
+      post :create, user: {name: "Bob", password: "123456", email: Faker::Internet.email}, token: "7890"
+      expect(User.last.leaders).to include(budda)
+      expect(User.last.followers).to include(budda)  
+    end
+    it " creates the invitor token to ensure an invitation only invite a user." do
+      budda = Fabricate(:user)
+      budda.update_column(:token, "7890")
+      post :create, user: {name: "Bob", password: "123456", email: Faker::Internet.email}, token: "7890"
+      post :create, user: {name: "seal", password: "123456", email: Faker::Internet.email}, token: "7890"
+      expect(User.last.leaders).not_to include(budda)
+      
+    end
     it "renders a template when @user is not valid" do
       User.create(name: "Bob", password: "123456", email: "user1@email.com")
       post :create, user: {name: "Bob", password: "123456", email: "user1@email.com"}

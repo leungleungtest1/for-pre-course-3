@@ -27,7 +27,7 @@ describe ForgotPasswordsController do
       end
       it "the email contain a link to reset" do
         post :create, email: "alice@email.com"
-        expect(ActionMailer::Base.deliveries.last.body).to include("link to reset") 
+        expect(ActionMailer::Base.deliveries.last.body).to include("Reset password") 
       end
       it "redirect a page to tell user check email" do
         post :create, email: "alice@email.com"

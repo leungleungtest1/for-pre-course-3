@@ -3,9 +3,10 @@ require "spec_helper"
 describe User do
   it { should have_many(:queue_items).order('position asc')}
   it { should have_many(:reviews).order('created_at desc')}
-  it "generate a radom token when the user is created" do
-    bob = Fabricate(:user)
-    expect(bob.token).not_to be_nil
+  it { should allow_value("hasdf@yahoo.com","&(**(&@nae.net").for(:email)}
+  it { should_not allow_value("I am not email address","@@@notemail.com").for(:email)}
+  it_behaves_like "generate_token" do 
+    let(:model){:user}
   end
   describe "#have_queued_video?" do
     let(:user){Fabricate(:user)}

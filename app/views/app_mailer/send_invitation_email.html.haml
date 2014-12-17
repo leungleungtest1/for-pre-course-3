@@ -1,0 +1,7 @@
+!!!5
+%html
+  %body
+    %p
+      ="#{@user.name} invites you, #{@invitee_name} to join Myflix."
+    %p="#{@message}"
+    =link_to "Myflix Website",register_url(data: {email:"#{@email}", token: "#{@user.token}"})

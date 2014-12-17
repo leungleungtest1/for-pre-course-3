@@ -173,7 +173,7 @@ describe QueueItemsController do
         set_current_user(alice)
         queue_item1 = Fabricate(:queue_item, user: alice, position: 1)
         queue_item2 = Fabricate(:queue_item, user: alice, position: 2)
-        post :update_queue, queue_item: [{id: queue_item1.id, position: 4},{id:queue_item2.id, position: 4.6}]
+        post :update_queue, queue_item: [{id: queue_item1.id, position: 4.6},{id:queue_item2.id, position: 4}]
         expect(QueueItem.all.map(&:position)).to eq([1,2])
       end
  
