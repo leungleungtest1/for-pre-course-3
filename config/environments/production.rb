@@ -19,7 +19,7 @@ Myflix::Application.configure do
   config.active_support.deprecation = :notify
 
   #test for sending email in production
-  config.action_mailer.default_url_options = {:host => 'peaceful-hollows-1925.herokuapp.com'}
+  config.action_mailer.default_url_options = {:host => 'peaceful-hollows-1925.herokuapp.com', :protocol => 'http'}
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
