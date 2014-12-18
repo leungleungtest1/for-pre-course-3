@@ -12,7 +12,7 @@ class InvitationController < ApplicationController
       flash[:danger] = "Eamil address you input is invalid."
       redirect_to invite_friends_path
     else
-      AppMailer.delay.send_invitation_email(current_user, params[:name], params[:email],params[:message])
+      AppMailer.send_invitation_email(current_user, params[:name], params[:email],params[:message]).deliver
       flash[:success] = "you send a email successfully."
       redirect_to invite_friends_path
     end
