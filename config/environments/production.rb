@@ -26,11 +26,10 @@ Myflix::Application.configure do
   config.action_mailer.perform_deliveries = true
   config.action_mailer.smtp_settings = {
    :address => "smtp.gmail.com",
-   :port => 465,
+   :port => 587,
    :domain => 'peaceful-hollows-1925.herokuapp.com',  #I've also tried changing this to 'gmail.com'
    :authentication => :plain, # I've also tried changing this to :login
    :enable_starttls_auto => true,
-   :user_name => 'leungleungtest2@gmail.com',
-   :password => 'google123z'
- }
+   :user_name => ENV["GMAIL_USERNAME"],
+   :password => ENV['GMAIL_PP']
 end

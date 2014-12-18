@@ -12,6 +12,7 @@ gem 'pg'
 gem 'rvm'
 gem 'bcrypt', '~> 3.1.7'
 gem 'bootstrap-form'
+gem "figaro"
 
 
 group :development do
