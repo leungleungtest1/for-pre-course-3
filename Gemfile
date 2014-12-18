@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.1.1'
+ruby '2.0.0'
 gem 'autoprefixer-rails'
 gem 'bootstrap-sass'
 gem 'coffee-rails'
@@ -13,7 +13,7 @@ gem 'rvm'
 gem 'bcrypt', '~> 3.1.7'
 gem 'bootstrap-form'
 gem "figaro"
-
+gem 'sidekiq'
 
 group :development do
   gem 'thin'

@@ -16,8 +16,7 @@ class UsersController < ApplicationController
     if @user.valid?
       becomes_friend(@user,invitor)
       invitor.update_column(:token, SecureRandom.urlsafe_base64) if invitor
-      AppMailer.send_welcome_email(@user).deliver
-      Appmailer.send_simple_message.deliver
+      AppMailer.delay.send_welcome_email(@user)
       flash[:success] = "#{@user.name} register successfully."
            redirect_to sign_in_path
      else

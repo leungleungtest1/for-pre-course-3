@@ -25,7 +25,7 @@ Myflix::Application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
   config.action_mailer.smtp_settings = {
-   :address => "smtp.gmail.com",
+   :address => "smtp.mailgun.com",
    :port => 587,
    :domain => 'peaceful-hollows-1925.herokuapp.com', 
    :authentication => :plain, 
