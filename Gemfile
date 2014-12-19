@@ -14,6 +14,8 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'bootstrap-form'
 gem "figaro"
 gem 'sidekiq'
+gem "sentry-raven"
+gem 'paratrooper'
 
 group :development do
   gem 'thin'
