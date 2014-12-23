@@ -49,5 +49,7 @@ describe VideosController do
       expect(response).to redirect_to(sign_in_path)
     end
   end
+
+
   
 end

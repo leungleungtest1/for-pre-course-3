@@ -26,5 +26,10 @@ Myflix::Application.routes.draw do
   get "expired_token", to: "password_resets#expired_token"
   get "invite_friends", to: "invitation#invite_friends"
   post "invite_friend", to: "invitation#send_invitation"
+  namespace :admin do
+    get '/add_video', to: "videos#add_video"
+    resources :videos, only: [:create]
+  end 
+  post "/payment", to: "payment#create"
 end
 

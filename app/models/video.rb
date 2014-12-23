@@ -1,10 +1,12 @@
+require 'carrierwave/orm/activerecord'
 class Video < ActiveRecord::Base
   has_many :reviews,->{order "created_at desc"}
   has_many :queueitems
   has_many :myqueues, through: :myqueuevideos
   belongs_to :category
   validates :title, :description, presence: true
-
+  mount_uploader :large_cover, LargeCoverUploader
+  mount_uploader :small_cover, SmallCoverUploader
   def self.search_by_title(search_term)
     return [] if search_term.blank?
     self.where("title iLIKE ?", "%#{search_term}%").order("created_at DESC")
@@ -15,9 +17,9 @@ class Video < ActiveRecord::Base
       total_rating += review.rating 
     end
     if self.reviews.count >0
-    (total_rating/(self.reviews.count)).round(1)
-  else
-    0
-  end
+      (total_rating/(self.reviews.count)).round(1)
+    else
+      0
+    end
   end
 end

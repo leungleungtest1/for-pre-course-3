@@ -35,7 +35,7 @@ describe ForgotPasswordsController do
       end
     end
     context " with invalid email address" do
-      alice = Fabricate(:user, name: "alice" ,email: "alice@email.com") 
+
       before do
         ActionMailer::Base.deliveries = []
       end

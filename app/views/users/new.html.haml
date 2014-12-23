@@ -14,8 +14,10 @@
           .col-sm-2= f.text_field :name
           =hidden_field_tag :token, value: @token
         %br
-        = f.submit "Sign Up"
-
+        .row
+          .col-sm-2
+          .col-sm-3
+            %script{src:"https://checkout.stripe.com/checkout.js",class: "stripe-button","data-key"=> @stripe_public_key, "data-image"=> "/square-image.png", "data-name"=> "Myflix websiet", "data-description"=> "only 9.99usd)","data-amount"=>"999"}
 /
   %section.register
   Register

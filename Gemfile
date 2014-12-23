@@ -16,7 +16,12 @@ gem "figaro"
 gem 'sidekiq'
 gem "sentry-raven"
 gem 'paratrooper'
-
+gem 'carrierwave'
+gem 'mini_magick'
+gem 'fog'
+gem 'stripe', :source => 'https://code.stripe.com/'
+gem 'rest-client'
+gem 'json'
 group :development do
   gem 'thin'
   gem "better_errors"
