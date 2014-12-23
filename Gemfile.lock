@@ -1,6 +1,14 @@
+GIT
+  remote: https://github.com/stripe/stripe-ruby
+  revision: 62e110a33e5c742b2729e5191cb4335c1c6f517f
+  specs:
+    stripe (1.16.1)
+      json (~> 1.8.1)
+      mime-types (>= 1.25, < 3.0)
+      rest-client (~> 1.4)
+
 GEM
   remote: https://rubygems.org/
-  remote: https://code.stripe.com/
   specs:
     actionmailer (4.1.1)
       actionpack (= 4.1.1)
@@ -229,10 +237,6 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (~> 2.8)
-    stripe (1.16.1)
-      json (~> 1.8.1)
-      mime-types (>= 1.25, < 3.0)
-      rest-client (~> 1.4)
     subexec (0.2.3)
     thin (1.5.0)
       daemons (>= 1.0.9)

@@ -19,7 +19,7 @@ gem 'paratrooper'
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'fog'
-gem 'stripe', :source => 'https://code.stripe.com/'
+gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 gem 'rest-client'
 gem 'json'
 group :development do
