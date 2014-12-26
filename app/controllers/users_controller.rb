@@ -17,34 +17,23 @@ class UsersController < ApplicationController
     invitor = User.find_by_token(params[:token])
      @user = User.create( params.require(:user).permit(:name, :password,:email))
     if @user.valid?
-    # Set your secret key: remember to change this to your live secret key in production
-    # See your keys here https://dashboard.stripe.com/account
-    Stripe.api_key = ENV["STRIPE_SECRET_KEY"]
-    binding.pry
-    # Get the credit card details submitted by the form
-    token = params[:stripeToken]
-
-    # Create the charge on Stripe's servers - this will charge the user's card
-    begin
-      charge = Stripe::Charge.create(
-        :amount => 999, # amount in cents, again
-        :currency => "usd",
-        :card => token,
-        :description => "payment from #{@user.name}, #{@user.email}"
-      )
-      flash[:waring] = "You paid 9 dollors and 99 cents"
-      becomes_friend(@user,invitor)
-      invitor.update_column(:token, SecureRandom.urlsafe_base64) if invitor
-      AppMailer.send_welcome_email(@user)
-      flash[:success] = "#{@user.name} register successfully."
-      redirect_to sign_in_path
-    rescue Stripe::CardError => e
-      # The card has been declined
-      @user.destroy
-      flash[:waring] = e.message
-      flash[:danger] = "You fialed to register"
-      redirect_to register_path
-    end
+      token = params[:stripeToken]
+      charge = StripeWrapper::Charge.create({:amount => 999, :card => token, :description => "payment from #{@user.name}, #{@user.email}"} )
+      
+      if charge.successful?
+        flash[:waring] = "You paid 9 dollars and 99 cents"
+        becomes_friend(@user,invitor)
+        invitor.update_column(:token, SecureRandom.urlsafe_base64) if invitor
+        AppMailer.send_welcome_email(@user).deliver
+        flash[:success] = "#{@user.name} register successfully."
+        redirect_to sign_in_path
+      #rescue Stripe::CardError => e
+      else
+        @user.destroy
+        flash[:waring] = charge.error_message
+        flash[:danger] = "You fialed to register"
+        redirect_to register_path
+      end
       
      else
       flash.now[:danger] = @user.errors.full_messages.join(', ')

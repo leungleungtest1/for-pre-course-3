@@ -6,7 +6,7 @@ feature 'user register and pay' do
     ENV['STRIPE_PUBLIC_KEY']= "pk_test_tRkCxDbnhy8B0oUjBNcTT7l4"
   end
 
-  scenario " a new user register with card payment" do
+  scenario " a new user register with card payment", {js: true, vcr: true} do
     visit register_path
     page.fill_in "user_email", with: "user4@email.com"
     page.fill_in "user_password", with: "123456"
@@ -18,6 +18,6 @@ feature 'user register and pay' do
     click_button "Sign Up"
     
     expect(page).to have_content "user4 register successfully"
-    expect(page).to have_content "You paid 9 dollars and 99 cents."
+    expect(page).to have_content "You paid 9 dollars and 99 cents"
   end
 end
