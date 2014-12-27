@@ -31,7 +31,7 @@ class UsersController < ApplicationController
       else
         @user.destroy
         flash[:waring] = charge.error_message
-        flash[:danger] = "You fialed to register"
+        flash[:danger] = "You failed to register"
         redirect_to register_path
       end
       

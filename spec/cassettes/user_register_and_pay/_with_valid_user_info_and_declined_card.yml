@@ -1,0 +1,66 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/charges
+    body:
+      encoding: US-ASCII
+      string: amount=999&currency=usd&card=tok_15Dn8qCP7OfzzeMeHPicPhPF&description=payment%20from%20user4%2C%20user4%40email.com
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.16.1
+      Authorization:
+      - Bearer sk_test_g9KW02Qtqasrw6Iu9Vj59gMm
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.16.1","lang":"ruby","lang_version":"2.1.5 p273 (2014-11-13)","platform":"x86_64-linux","publisher":"stripe","uname":"Linux
+        kafai-Lenovo-B480 3.13.0-43-generic #72-Ubuntu SMP Mon Dec 8 19:35:06 UTC
+        2014 x86_64 x86_64 x86_64 GNU/Linux"}'
+      Content-Length:
+      - '115'
+  response:
+    status:
+      code: 402
+      message: Payment Required
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Fri, 26 Dec 2014 01:43:49 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '162'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_GZd6FpyHEokGUppB
+      Stripe-Version:
+      - '2014-12-17'
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "error": {
+            "message": "Your card was declined.",
+            "type": "card_error",
+            "code": "card_declined",
+            "charge": "ch_15Dn8rCP7OfzzeMenlD5XOQ7"
+          }
+        }
+    http_version: 
+  recorded_at: Fri, 26 Dec 2014 01:43:49 GMT
+recorded_with: VCR 2.9.2

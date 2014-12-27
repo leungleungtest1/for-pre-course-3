@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
   end
 
   def requrie_admin
-    unless current_user.admin
+    unless current_user.admin == true
       flash[:danger] = "You are not authorized to access this area."
       redirect_to home_path
     end

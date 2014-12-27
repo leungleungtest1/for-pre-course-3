@@ -6,7 +6,7 @@ class VideosController < ApplicationController
   end
 
   def show
-    @video = Video.find params[:id]
+    @video = VideoDecorator.decorate(Video.find params[:id])
   end
   def search
     @results =  Video.search_by_title(params[:search_term])
