@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'user register and pay', {js: true, vcr: true} do
+feature 'user register and pay', {js: true, vcr: true, driver: :selenium} do
   background do
     ENV['STRIPE_SECRET_KEY']= "sk_test_g9KW02Qtqasrw6Iu9Vj59gMm"
     ENV['STRIPE_PUBLIC_KEY']= "pk_test_tRkCxDbnhy8B0oUjBNcTT7l4"
@@ -59,7 +59,7 @@ feature 'user register and pay', {js: true, vcr: true} do
     click_button "Sign Up"
     
     expect(page).to have_content "Email is invalid"
-    expect(page).to have_content "You are not charged"
+    expect(page).to have_content "You failed to register"
   end
   scenario " with invalid user info and invalid card" do
     visit register_path
@@ -73,7 +73,7 @@ feature 'user register and pay', {js: true, vcr: true} do
     click_button "Sign Up"
     
     expect(page).to have_content "Email is invalid"
-    expect(page).to have_content "You are not charged"
+    expect(page).to have_content "You failed to register"
   end
   scenario " with valid user info and declined card" do
     visit register_path
