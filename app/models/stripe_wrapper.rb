@@ -31,6 +31,38 @@ module StripeWrapper
     end
   end
 
+  class Customer
+    attr_reader :response, :status
+    def initialize(response, status)
+      @response = response
+      @status = status
+    end
+    def self.create(token,user)
+      begin
+        customer = Stripe::Customer.create(
+        :card => token,
+        :plan => "regular",
+        :email => "#{user.email}"
+      )
+        new(customer,:success)
+      rescue Stripe::CardError => e
+        new(e,:error)
+      end
+    end
+
+    def successful?
+      self.status == :success
+    end
+
+    def error_message
+      self.response.message 
+    end
+
+    def customer_token
+      self.response.id
+    end
+  end
+
   def self.set_api_key
     Stripe.api_key = Rails.env.production? ? ENV['STRIPE_LIVE_SECRET_KEY'] : "sk_test_g9KW02Qtqasrw6Iu9Vj59gMm"
   end

@@ -16,18 +16,22 @@ class UsersController < ApplicationController
     @categories = Category.all
     invitor = User.find_by_token(params[:token])
     @user = User.create( params.require(:user).permit(:name, :password,:email))
+    Stripe.api_key = ENV["STRIPE_SECRET_KEY"]
     token = params[:stripeToken]
-    getpaymentmanager = GetPaymentManager.new(@user)
-    getpaymentmanager.user_sign_up(token,invitor)
-    if getpaymentmanager.successful?
+    customer = StripeWrapper::Customer.create(token,@user)
+
+    if customer.successful?
       flash[:warning] = "You paid 9 dollars and 99 cents"
       flash[:success] = "#{@user.name} register successfully."
+      @user.customer_token = customer.response.id
+      @user.save
       redirect_to sign_in_path
     else
-      flash[:warning] = getpaymentmanager.error_message
+      flash[:warning] = customer.error_message
       flash[:danger] = "You failed to register and are not charged"
       redirect_to register_path
     end
+
   end
 
   def show

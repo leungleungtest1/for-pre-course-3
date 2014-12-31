@@ -31,5 +31,9 @@ Myflix::Application.routes.draw do
     resources :videos, only: [:create]
   end 
   post "/payment", to: "payment#create"
+  mount StripeEvent::Engine, at: '/userpaymentrecord'
+  namespace :admin do
+    get '/userpaymentrecord', to: "userpaymentrecords#show"
+  end
 end
 

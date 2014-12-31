@@ -3,9 +3,17 @@ describe GetPaymentManager do
   describe "#user_sign_up" do
     context "with valid user info and card" do
       before do
-        charge = double('charge')
-        charge.stub(:successful?).and_return(true)
-        StripeWrapper::Charge.stub(:create).and_return(charge)
+        customer = double('customer')
+        customer.stub(:successful?).and_return(true)
+        customer.stub(:customer_token).and_return("dke3d")
+        StripeWrapper::Customer.stub(:create).and_return(customer)
+      end
+      it "stores the customer token from stripe" do
+        budda = Fabricate(:user)
+        budda.update_column(:token, "7890")
+        bob = Fabricate(:user)
+        GetPaymentManager.new(bob).user_sign_up(:token,budda)    
+        expect(User.last.customer_token).to eq("dke3d")
       end
       it "creates a leadership and followership with invitor when @user is valid and there is invitor" do
         budda = Fabricate(:user)
@@ -30,10 +38,10 @@ describe GetPaymentManager do
     end
     context "with valid personal info and invalid card"do
       before do
-        charge = double('charge')
-        charge.stub(:successful?).and_return(false)
-        StripeWrapper::Charge.stub(:create).and_return(charge)
-        charge.stub(:error_message).and_return("fail")
+        customer = double('customer')
+        customer.stub(:successful?).and_return(false)
+        StripeWrapper::Customer.stub(:create).and_return(customer)
+        customer.stub(:error_message).and_return("fail")
       end
       it "sets error_message" do
         bob = Fabricate(:user)
@@ -44,9 +52,9 @@ describe GetPaymentManager do
     end
     context "with invalid perosnal info" do
       before do
-        charge = double('charge')
-        charge.stub(:successful?).and_return(true)
-        StripeWrapper::Charge.stub(:create).and_return(charge)
+        customer = double('customer')
+        customer.stub(:successful?).and_return(true)
+        StripeWrapper::Customer.stub(:create).and_return(customer)
       end
       it "does not create a user" do
         bob = User.create(name: "sparta")
@@ -58,14 +66,14 @@ describe GetPaymentManager do
         bob = User.create(name: "sparta")
         getpaymentmanager = GetPaymentManager.new(bob)
         getpaymentmanager.user_sign_up("1s31")
-        StripeWrapper::Charge.should_not_receive(:create)
+        StripeWrapper::Customer.should_not_receive(:create)
       end      
     end
     context "send a email" do
       before do
-        charge = double('charge')
-        charge.stub(:successful?).and_return(true)
-        StripeWrapper::Charge.stub(:create).and_return(charge)
+        customer = double('customer')
+        customer.stub(:successful?).and_return(true)
+        StripeWrapper::Customer.stub(:create).and_return(customer)
       end
       after {ActionMailer::Base.deliveries.clear}
       before {ActionMailer::Base.deliveries.clear}

@@ -42,6 +42,28 @@ describe SessionsController do
       post :create, {email: user.email, password: "123456"}
       expect(flash[:success]).not_to be_blank
     end
+    context "when a user fail to pay" do
+      let(:bob){Fabricate(:user)}
+      let(:failure_payment){Fabricate(:payment,status: "failed")}
+      it "does not set session[user_id]" do
+        failure_payment.user = bob
+        failure_payment.save
+        post :create, {email: bob.email, password: "123456"}
+        expect(session[:user_id]).to eq(nil)
+      end
+      it "flash a message to tell user is blocked" do
+        failure_payment.user = bob
+        failure_payment.save
+        post :create, {email: bob.email, password: "123456"}
+        expect(flash[:danger]).to include("You are blocked")        
+      end
+      it "redirect_to sign in page" do
+        failure_payment.user = bob
+        failure_payment.save
+        post :create, {email: bob.email, password: "123456"}
+        expect(response).to redirect_to sign_in_path        
+      end
+    end
   end
   describe 'GET destroy' do
     it "clear session[:user_id]" do

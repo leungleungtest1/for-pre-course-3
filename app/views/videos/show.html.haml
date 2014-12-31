@@ -1,15 +1,17 @@
+= javascript_include_tag "show_video"
 %article.video
   .container
     .row
       .col-sm-7.col-sm-offset-1
-        %img.video_large_cover{src: "#{@video.large_cover}"}
+        %img.video_large_cover{src: "#{@video.large_cover}", id: "video_large_cover"}
+        %iframe.display_none{ :width => "560", :height => "315", :src => "//www.youtube.com/embed/z3biFxZIJOQ?rel=0&amp;controls=0&amp;showinfo=0&autoplay=0", :frameborder => "0", "allowfullscreen"=> "0",id: "video_youtube_url"}
       .video_info.col-sm-3
         %header
           %h3= @video.title
           %span=@video.show_rate_in_template
         %p= @video.description
         .actions
-          =link_to "Watch Now", "#{@video.video_url}", class: "btn btn-primary"
+          =link_to "Watch Now", "", class: "btn btn-primary", id: "watch_now_buttom"
           = link_to "+Queue", queue_items_path(video_id: @video.id), method: :post, class: 'btn btn-default' if current_user.have_queued_video?(@video)
 
 %section.reviews.container

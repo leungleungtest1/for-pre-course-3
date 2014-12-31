@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   has_many :leaders, through: :followerships
   has_many :leaderships, class_name: "Relationship", foreign_key: "leader_id"
   has_many :followers, through: :leaderships
+  has_many :payments
     def nomalize_queue_items_position
       queue_items.each_with_index do |q_item, index|
       q_item.update_attributes(position: index+1)
@@ -37,4 +38,15 @@ class User < ActiveRecord::Base
       self.token
     end
 
+    def failed_to_pay?
+      if self.payments.last
+        if self.payments.last.status == "failed" 
+          true
+        else
+          false
+        end
+      else
+        false
+      end
+    end
 end 

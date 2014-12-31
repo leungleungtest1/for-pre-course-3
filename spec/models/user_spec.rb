@@ -19,7 +19,22 @@ describe User do
       expect(user.have_queued_video?(video)).to eq(true)
     end
   end
-
+  describe "#failed_to_pay?" do
+    let(:alice){Fabricate(:user)}
+    let(:fail_payment){Fabricate(:payment, status: "failed")}
+    let(:payment){Fabricate(:payment)}
+    it "returns true when a user failed to pay" do
+      alice.payments << fail_payment
+      expect(alice.failed_to_pay?).to be_truthy
+    end
+    it "returns false when a user paied successfully" do
+      alice.payments << payment
+      expect(alice.failed_to_pay?).to eq(false)
+    end
+    it "returns false when a user does not have payment record" do
+      expect(alice.failed_to_pay?).to eq(false)
+    end
+  end
   describe "#follow?" do
     let(:alice){Fabricate(:user)}
     let(:bob){Fabricate(:user)}

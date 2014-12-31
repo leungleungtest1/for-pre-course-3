@@ -23,6 +23,8 @@ gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 gem 'rest-client'
 gem 'json'
 gem 'draper','~> 1.3'
+gem 'stripe_event'
+
 group :development do
   gem 'thin'
   gem "better_errors"
