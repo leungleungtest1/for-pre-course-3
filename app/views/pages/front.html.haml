@@ -1,8 +1,26 @@
 %section.site_title
   .h3 
     Unlimited Movies for Only 9.99 amonth.
-    = link_to 'Sing Up Now!', register_path
+    = link_to 'Sign Up Now!', register_path
   %br
   %p 
     Have an account? Please 
     = link_to 'Sign in', sign_in_path
+
+  = link_to 'or Try it Free', "#",{"data-toggle"=>"modal", "data-target"=>"#myModal"}
+    
+
+  .modal.fade{id:"myModal"}
+    .modal-dialog
+      .modal-content
+        .modal-header.background-color-red
+          %button.close{ :type=>"button", "data-dismiss"=>"modal", "aria-label"=>"Close"}
+            %span{ "aria-hidden"=>"true"}
+          %h4.modal-title
+            Here is a free account
+        .modal-body
+          %p Account: Alice@email.com
+          %p Password: 123456
+        .modal-footer
+          %button.btn.btn-default{ :type=>"button", "data-dismiss"=>"modal"}Close
+
