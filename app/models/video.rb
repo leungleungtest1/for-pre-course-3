@@ -23,7 +23,4 @@ class Video < ActiveRecord::Base
     end
   end
 
-  def show_rate_in_template
-    "#{average_rating}/5.0"
-  end
 end

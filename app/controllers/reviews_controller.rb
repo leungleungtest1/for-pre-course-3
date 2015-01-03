@@ -1,7 +1,7 @@
 class ReviewsController < ApplicationController
   before_action :require_log_in
   def create
-    @video = Video.find(params[:video_id])
+    @video = VideoDecorator.decorate(Video.find params[:video_id])
     @review = Review.create( params.require(:review).permit!)
     @review.video = @video
     @review.user = current_user
